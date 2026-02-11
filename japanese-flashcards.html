@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Learn essential Japanese phrases and numbers for travelers">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <title>Japanese Travel Phrases Flashcards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+
+        .progress {
+            text-align: center;
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .japanese {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 300;
+        }
+
+        .romaji {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .english {
+            font-size: 1.3em;
+            color: #667eea;
+            font-weight: 600;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .score-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .score-display {
+            font-size: 4em;
+            color: #667eea;
+            margin: 20px 0;
+            font-weight: 700;
+        }
+
+        .score-message {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .correct {
+            color: #48bb78;
+        }
+
+        .incorrect {
+            color: #f56565;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 5px;
+            }
+
+            .subtitle {
+                margin-bottom: 20px;
+            }
+
+            .card {
+                padding: 20px 15px;
+                min-height: 140px;
+                margin-bottom: 15px;
+            }
+
+            .japanese {
+                font-size: 1.8em;
+                margin-bottom: 8px;
+            }
+
+            .romaji {
+                font-size: 1em;
+                margin-bottom: 10px;
+            }
+
+            .english {
+                font-size: 1.1em;
+                margin-top: 10px;
+                padding-top: 10px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            button {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+
+            .progress {
+                font-size: 1em;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇯🇵 Japanese Travel Phrases</h1>
+        <p class="subtitle">Learn essential phrases and numbers for your trip to Japan</p>
+
+        <div class="buttons" style="margin-bottom: 30px;" id="modeSelection">
+            <button class="btn-primary" onclick="startMode('phrases')">📚 Practice Phrases (20)</button>
+            <button class="btn-primary" onclick="startMode('numbers')">🔢 Practice Numbers (10)</button>
+        </div>
+
+        <div id="gameArea" class="hidden">
+            <div class="progress" id="progress">Question 1 of 25</div>
+            
+            <div class="card">
+                <div class="japanese" id="japanese">こんにちは</div>
+                <div class="romaji" id="romaji">Konnichiwa</div>
+                <div class="english hidden" id="english">Hello</div>
+            </div>
+
+            <div class="buttons">
+                <button class="btn-primary" id="pronounceBtn" onclick="pronounce()">🔊 Pronounce</button>
+                <button class="btn-secondary" id="showAnswerBtn" onclick="showAnswerEarly()">👁️ Show Answer</button>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <input 
+                    type="text" 
+                    id="answerInput" 
+                    placeholder="Type the English meaning here..."
+                    style="width: 100%; padding: 15px; font-size: 1.1em; border: 2px solid #e2e8f0; border-radius: 10px; margin-bottom: 15px;"
+                    onkeypress="if(event.key === 'Enter') checkAnswer()"
+                    onfocus="scrollToInput()"
+                >
+                <button class="btn-primary" onclick="checkAnswer()" style="width: 100%;">Check Answer</button>
+            </div>
+
+            <div id="feedback" class="hidden" style="margin-top: 20px; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.2em; font-weight: 600;">
+            </div>
+
+            <div class="buttons hidden" style="margin-top: 15px;" id="nextButton">
+                <button class="btn-secondary" onclick="nextCard()" style="width: 100%;">Next Card →</button>
+            </div>
+        </div>
+
+        <div id="resultsArea" class="hidden">
+            <div class="score-card">
+                <h2>Quiz Complete! 🎉</h2>
+                <div class="score-display" id="finalScore">0/0</div>
+                <div class="score-message" id="scoreMessage">Great effort!</div>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number correct" id="correctCount">0</div>
+                        <div class="stat-label">Correct</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number incorrect" id="incorrectCount">0</div>
+                        <div class="stat-label">Incorrect</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="percentageScore">0%</div>
+                        <div class="stat-label">Score</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="restartQuiz()" style="width: 100%; margin-top: 20px;">
+                    🏠 Choose Mode
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const phrases = [
+            { japanese: "こんにちは", romaji: "Konnichiwa", english: "Hello" },
+            { japanese: "さようなら", romaji: "Sayōnara", english: "Goodbye" },
+            { japanese: "ありがとうございます", romaji: "Arigatō gozaimasu", english: "Thank you" },
+            { japanese: "すみません", romaji: "Sumimasen", english: "Excuse me / Sorry" },
+            { japanese: "お願いします", romaji: "Onegaishimasu", english: "Please" },
+            { japanese: "はい", romaji: "Hai", english: "Yes" },
+            { japanese: "いいえ", romaji: "Iie", english: "No" },
+            { japanese: "おはようございます", romaji: "Ohayō gozaimasu", english: "Good morning" },
+            { japanese: "こんばんは", romaji: "Konbanwa", english: "Good evening" },
+            { japanese: "おやすみなさい", romaji: "Oyasuminasai", english: "Good night" },
+            { japanese: "いただきます", romaji: "Itadakimasu", english: "Let's eat (before meal)" },
+            { japanese: "ごちそうさまでした", romaji: "Gochisōsama deshita", english: "Thank you for the meal" },
+            { japanese: "わかりません", romaji: "Wakarimasen", english: "I don't understand" },
+            { japanese: "英語を話せますか", romaji: "Eigo o hanasemasu ka", english: "Do you speak English?" },
+            { japanese: "トイレはどこですか", romaji: "Toire wa doko desu ka", english: "Where is the toilet?" },
+            { japanese: "いくらですか", romaji: "Ikura desu ka", english: "How much is it?" },
+            { japanese: "助けてください", romaji: "Tasukete kudasai", english: "Please help me" },
+            { japanese: "名前は何ですか", romaji: "Namae wa nan desu ka", english: "What is your name?" },
+            { japanese: "私の名前は", romaji: "Watashi no namae wa", english: "My name is..." },
+            { japanese: "はじめまして", romaji: "Hajimemashite", english: "Nice to meet you" }
+        ];
+
+        const numbers = [
+            { romaji: "Ichi", english: "One" },
+            { romaji: "Ni", english: "Two" },
+            { romaji: "San", english: "Three" },
+            { romaji: "Shi / Yon", english: "Four" },
+            { romaji: "Go", english: "Five" },
+            { romaji: "Roku", english: "Six" },
+            { romaji: "Shichi / Nana", english: "Seven" },
+            { romaji: "Hachi", english: "Eight" },
+            { romaji: "Kyū", english: "Nine" },
+            { romaji: "Jū", english: "Ten" }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let incorrectCount = 0;
+        let shuffledPhrases = [];
+        let answered = false;
+        let currentMode = 'phrases';
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function startMode(mode) {
+            currentMode = mode;
+            document.getElementById('modeSelection').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            startQuiz();
+        }
+
+        function startQuiz() {
+            const dataSource = currentMode === 'phrases' ? phrases : numbers;
+            shuffledPhrases = shuffleArray(dataSource);
+            currentIndex = 0;
+            score = 0;
+            incorrectCount = 0;
+            showCard();
+        }
+
+        function showCard() {
+            if (currentIndex >= shuffledPhrases.length) {
+                showResults();
+                return;
+            }
+
+            const phrase = shuffledPhrases[currentIndex];
+            
+            // For numbers mode, hide the Japanese characters section
+            const japaneseElement = document.getElementById('japanese');
+            if (currentMode === 'numbers') {
+                japaneseElement.style.display = 'none';
+            } else {
+                japaneseElement.style.display = 'block';
+                japaneseElement.textContent = phrase.japanese;
+            }
+            
+            document.getElementById('romaji').textContent = phrase.romaji;
+            document.getElementById('english').textContent = phrase.english;
+            document.getElementById('english').classList.add('hidden');
+            document.getElementById('progress').textContent = `Question ${currentIndex + 1} of ${shuffledPhrases.length}`;
+            document.getElementById('answerInput').value = '';
+            document.getElementById('answerInput').disabled = false;
+            document.getElementById('showAnswerBtn').disabled = false;
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('nextButton').classList.add('hidden');
+            answered = false;
+            
+            // Scroll to top when showing new card
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToInput() {
+            // Small delay to let keyboard appear
+            setTimeout(() => {
+                const input = document.getElementById('answerInput');
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        function pronounce() {
+            const phrase = shuffledPhrases[currentIndex];
+            let textToSpeak = '';
+            
+            if (currentMode === 'phrases') {
+                textToSpeak = phrase.japanese;
+            } else {
+                // For numbers, speak the romaji
+                textToSpeak = phrase.romaji;
+            }
+            
+            const utterance = new SpeechSynthesisUtterance(textToSpeak);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.8;
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        }
+
+        function showAnswerEarly() {
+            if (answered) return;
+
+            const correctAnswer = shuffledPhrases[currentIndex].english;
+            const feedback = document.getElementById('feedback');
+            
+            // Show the correct answer
+            document.getElementById('english').classList.remove('hidden');
+            
+            // Mark as incorrect
+            incorrectCount++;
+            feedback.style.background = '#fed7d7';
+            feedback.style.color = '#742a2a';
+            feedback.innerHTML = `The answer was: <strong>${correctAnswer}</strong>`;
+            
+            feedback.classList.remove('hidden');
+            document.getElementById('nextButton').classList.remove('hidden');
+            document.getElementById('answerInput').disabled = true;
+            document.getElementById('showAnswerBtn').disabled = true;
+            answered = true;
+        }
+
+        function normalizeAnswer(text) {
+            return text.toLowerCase()
+                .trim()
+                .replace(/[.,!?;:]/g, '')
+                .replace(/\s+/g, ' ');
+        }
+
+        function checkAnswer() {
+            if (answered) return;
+
+            const userAnswer = document.getElementById('answerInput').value;
+            const correctAnswer = shuffledPhrases[currentIndex].english;
+            const feedback = document.getElementById('feedback');
+            
+            // Show the correct answer
+            document.getElementById('english').classList.remove('hidden');
+            
+            // Normalize both answers for comparison
+            const normalizedUser = normalizeAnswer(userAnswer);
+            const normalizedCorrect = normalizeAnswer(correctAnswer);
+            
+            // Check if answer is correct (exact match or contains the key phrase)
+            const isCorrect = normalizedUser === normalizedCorrect || 
+                             normalizedCorrect.includes(normalizedUser) ||
+                             normalizedUser.includes(normalizedCorrect);
+            
+            if (isCorrect && userAnswer.trim() !== '') {
+                score++;
+                feedback.style.background = '#c6f6d5';
+                feedback.style.color = '#22543d';
+                feedback.innerHTML = '✓ Correct! Well done!';
+            } else {
+                incorrectCount++;
+                feedback.style.background = '#fed7d7';
+                feedback.style.color = '#742a2a';
+                feedback.innerHTML = `✗ Not quite. The answer is: <strong>${correctAnswer}</strong>`;
+            }
+            
+            feedback.classList.remove('hidden');
+            document.getElementById('nextButton').classList.remove('hidden');
+            document.getElementById('answerInput').disabled = true;
+            answered = true;
+        }
+
+        function nextCard() {
+            currentIndex++;
+            showCard();
+        }
+
+        function showResults() {
+            document.getElementById('gameArea').classList.add('hidden');
+            document.getElementById('resultsArea').classList.remove('hidden');
+            
+            const percentage = Math.round((score / shuffledPhrases.length) * 100);
+            
+            document.getElementById('finalScore').textContent = `${score}/${shuffledPhrases.length}`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('percentageScore').textContent = `${percentage}%`;
+            
+            let message = '';
+            if (percentage === 100) {
+                message = 'Perfect! You\'re ready for Japan! 🌟';
+            } else if (percentage >= 80) {
+                message = 'Excellent work! 素晴らしい！';
+            } else if (percentage >= 60) {
+                message = 'Good job! Keep practicing! 👍';
+            } else if (percentage >= 40) {
+                message = 'Not bad! Try again to improve! 📚';
+            } else {
+                message = 'Keep studying! Practice makes perfect! 💪';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+
+        function restartQuiz() {
+            document.getElementById('gameArea').classList.add('hidden');
+            document.getElementById('resultsArea').classList.add('hidden');
+            document.getElementById('modeSelection').classList.remove('hidden');
+        }
+
+        // Wait for user to select mode
+
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
